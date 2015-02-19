@@ -104,6 +104,9 @@ bool expect(bool (*uniqueFunc)(char*, uint32_t), char* input_string,
         if (output == expected_output) {
                 printf("'%s' PASSES\n", input_string);
                 ret = true;
+        } else if (len > 26) {
+                printf("'%s' FAILS\n", input_string);
+                ret = false;
         } else {
                 printf("'%s' FAILS\n", input_string);
                 ret = false;
@@ -142,9 +145,7 @@ int main(int32_t argc, char** argv) {
 
         len = strlen(test_string);
         /* If the length of the string is > 26 it has to have duplicates */
-        if (len > 26) {
-                return 0;
-        } else if (len > 0) {
+        if (len > 0) {
                 /* out = expect(is_unique, test_string, len, test); */
                 out = expect(is_unique_alt, test_string, len, test);
         } else {
