@@ -77,20 +77,45 @@ bool is_unique(char* input_string, uint32_t len) {
         return out;
 }
 
+/* Same as is_unique, but without using any extra storage space */
+bool is_unique_alt(char* input_string, uint32_t len) {
+        uint32_t storage = 0;
+        uint32_t offset = 0;
+        char SPACE = ' ';
+        bool out = true;
+
+        for (uint32_t i = 0; i < len; ++i) {
+                if (input_string[i] == SPACE) { continue; }
+
+                offset = charToNumber(input_string[i]);
+
+                if ((storage & (1 << offset)) > 0) {
+                        out = false;
+                } else {
+                        storage = storage | (1 << offset);
+                }
+        }
+
+        return out;
+}
+
 /* Function to run and check the output */
 bool expect(bool (*uniqueFunc)(char*, uint32_t), char* input_string, 
                 uint32_t len, bool expected_output) {
         bool output = false;
+        bool ret = false;
 
         output = (*uniqueFunc)(input_string, len);
 
         if (output == expected_output) {
                 printf("'%s' PASSES\n", input_string);
+                ret = true;
         } else {
                 printf("'%s' FAILS\n", input_string);
+                ret = false;
         }
 
-        return output;
+        return ret;
 }
 
 /* Takes first parameter and tests if it has unique letters */
@@ -123,7 +148,8 @@ int main(int32_t argc, char** argv) {
 
         len = strlen(test_string);
         if (len > 0) {
-                out = expect(is_unique, test_string, len, test);
+                /* out = expect(is_unique, test_string, len, test); */
+                out = expect(is_unique_alt, test_string, len, test);
         } else {
                 return 1;
         }
