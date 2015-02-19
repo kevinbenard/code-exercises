@@ -5,6 +5,10 @@
 #include "assert.h"
 #include "string.h"
 
+/* reverse takes in a string and reverses it.
+ * e.g: ./reverse 'abc' # returns cba
+ * e.g: ./reverse 'kevin' # returns nivek 
+ */
 void swap(char* a, char* b) {
         char tmp = 'a';
         tmp = *a;
@@ -25,13 +29,25 @@ char* reverse(char* input_string, uint8_t buf_size) {
 }
 
 int main(int argc, char** argv) {
-        char* test_string = argv[1];
+        char* test_string = NULL;
         char* out_string = NULL;
         uint8_t buf_size = 0;
 
-        buf_size = strlen(test_string);
-        out_string = reverse(test_string, buf_size);
-        printf("Out: %s\n", out_string);
+        if (argc != 2) {
+                printf("Incorrect params\n");
+                return 1;
+        }
+
+        buf_size = strlen(argv[1]);
+
+        if (buf_size > 0) {
+                test_string = argv[1];
+                out_string = reverse(test_string, buf_size);
+                printf("%s\n", out_string);
+        } else {
+                printf("Incorrect params\n");
+                return 1;
+        }
 
         return 0;
 }
