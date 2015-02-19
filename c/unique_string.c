@@ -1,3 +1,15 @@
+/* 
+ * A program that takes in a string and returns if it is made
+ * up of unique characters. Acceptable characters are: a - z,
+ * A - Z, and ' ' (space).
+ *
+ * Usage 1: ./unique_string "<string>"
+ *          e.g: ./unique_string "bar" # returns 0 (TRUE)
+ *          e.g: ./unique_string "foo" # returns 1 (FALSE)
+ * Usage 2: ./unique_string "<string>" <expected_boolean>
+ *          e.g: ./unique_string "foo" false # returns 0 (TRUE)
+ *          e.g: ./unique_string "foo" true # returns 1 (FALSE)
+ */
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdint.h"
@@ -36,10 +48,13 @@ uint8_t charToNumber(char c) {
 bool is_unique(char* input_string, uint32_t len) {
         uint32_t count_array[26] = {0};
         uint8_t offset = 0;
+        char SPACE = ' ';
         char c = 'A';
         bool out = true;
 
         for (uint8_t i = 0; i < len; ++i) {
+                if (input_string[i] == SPACE) { continue; }
+
                 offset = charToNumber(input_string[i]);
                 count_array[offset] += 1;
 
