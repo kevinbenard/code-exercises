@@ -1,7 +1,7 @@
 /* 
  * A program that takes in a string and returns if it is made
  * up of unique characters. Acceptable characters are: a - z,
- * A - Z, and ' ' (space).
+ * A - Z.
  *
  * Usage 1: ./unique_string "<string>"
  *          e.g: ./unique_string "bar" # returns 0 (TRUE)
@@ -48,13 +48,10 @@ uint8_t charToNumber(char c) {
 bool is_unique(char* input_string, uint32_t len) {
         uint32_t count_array[26] = {0};
         uint8_t offset = 0;
-        char SPACE = ' ';
         char c = 'A';
         bool out = true;
 
         for (uint8_t i = 0; i < len; ++i) {
-                if (input_string[i] == SPACE) { continue; }
-
                 offset = charToNumber(input_string[i]);
                 count_array[offset] += 1;
 
@@ -81,12 +78,9 @@ bool is_unique(char* input_string, uint32_t len) {
 bool is_unique_alt(char* input_string, uint32_t len) {
         uint32_t storage = 0;
         uint32_t offset = 0;
-        char SPACE = ' ';
         bool out = true;
 
         for (uint32_t i = 0; i < len; ++i) {
-                if (input_string[i] == SPACE) { continue; }
-
                 offset = charToNumber(input_string[i]);
 
                 if ((storage & (1 << offset)) > 0) {
@@ -147,7 +141,10 @@ int main(int32_t argc, char** argv) {
         }
 
         len = strlen(test_string);
-        if (len > 0) {
+        /* If the length of the string is > 26 it has to have duplicates */
+        if (len > 26) {
+                return 0;
+        } else if (len > 0) {
                 /* out = expect(is_unique, test_string, len, test); */
                 out = expect(is_unique_alt, test_string, len, test);
         } else {
