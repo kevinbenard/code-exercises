@@ -44,6 +44,7 @@ int main(int argc, char** argv) {
                 test_string = argv[1];
                 out_string = reverse(test_string, buf_size);
                 printf("%s\n", out_string);
+                free(out_string);
         } else {
                 printf("Incorrect params\n");
                 return 1;
