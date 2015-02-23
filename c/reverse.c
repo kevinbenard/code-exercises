@@ -10,27 +10,21 @@
  * e.g: ./reverse 'kevin' # returns nivek 
  */
 void swap(char* a, char* b) {
-        char tmp = 'a';
-        tmp = *a;
+        char tmp = *a;
         *a = *b;
         *b = tmp;
 }
 
-char* reverse(char* input_string, uint8_t buf_size) {
-        char* out_string = malloc(sizeof(char) * buf_size);
+void reverse(char* input_string, uint8_t buf_size) {
         uint32_t n = buf_size - 1;
 
-        strncpy(out_string, input_string, buf_size);
         for (uint32_t i = 0; i < (buf_size/2); ++i) {
-                swap(&out_string[i], &out_string[n-i]);
+                swap(&input_string[i], &input_string[n-i]);
         }
-
-        return out_string;
 }
 
 int main(int argc, char** argv) {
         char* test_string = NULL;
-        char* out_string = NULL;
         uint8_t buf_size = 0;
 
         if (argc != 2) {
@@ -42,9 +36,8 @@ int main(int argc, char** argv) {
 
         if (buf_size > 0) {
                 test_string = argv[1];
-                out_string = reverse(test_string, buf_size);
-                printf("%s\n", out_string);
-                free(out_string);
+                reverse(test_string, buf_size);
+                printf("%s\n", test_string);
         } else {
                 printf("Incorrect params\n");
                 return 1;
